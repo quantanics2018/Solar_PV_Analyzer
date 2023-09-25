@@ -1,0 +1,22 @@
+[Unit] 
+Description= node socket service 
+ConditionPathExists=/home/pi/Desktop/solar_vis/Server/socket.js
+
+[Service] 
+Type=simple 
+LimitNOFILE=1024 
+Restart=on-failure 
+RestartSec=10 
+StartLimitInterval=0 
+WorkingDirectory=/home/pi/Desktop/solar_vis/Server
+ExecStart= node socket.js
+
+# make sure log directory exists and owned by syslog
+PermissionsStartOnly=true 
+ExecStartPre=/bin/mkdir -p /var/log\socket_code
+StandardOutput=syslog 
+StandardError=syslog 
+SyslogIdentifier=node code 
+
+[Install] 
+WantedBy=multi-user.target

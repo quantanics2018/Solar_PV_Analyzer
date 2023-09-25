@@ -1,0 +1,22 @@
+[Unit] 
+Description= python code service 
+ConditionPathExists=/home/pi/Desktop/solar_vis/client/
+
+[Service] 
+Type=simple 
+LimitNOFILE=1024 
+Restart=on-failure 
+RestartSec=10 
+StartLimitInterval=0 
+WorkingDirectory=/home/pi/Desktop/solar_vis/client
+ExecStart= npm start
+
+# make sure log directory exists and owned by syslog
+PermissionsStartOnly=true 
+ExecStartPre=/bin/mkdir -p /var/log\py_code
+StandardOutput=syslog 
+StandardError=syslog 
+SyslogIdentifier=python code
+
+[Install] 
+WantedBy=multi-user.target

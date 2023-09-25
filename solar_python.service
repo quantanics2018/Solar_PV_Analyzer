@@ -1,0 +1,22 @@
+[Unit] 
+Description= python service 
+ConditionPathExists=/home/pi/Desktop/try_pv_analyser.py
+
+[Service] 
+Type=simple 
+LimitNOFILE=1024 
+Restart=on-failure 
+RestartSec=10 
+StartLimitInterval=0 
+WorkingDirectory=/home/pi/Desktop/
+ExecStart= python3 try_pv_analyser.py
+
+# make sure log directory exists and owned by syslog
+PermissionsStartOnly=true 
+ExecStartPre=/bin/mkdir -p /var/log\solar_python_code
+StandardOutput=syslog 
+StandardError=syslog 
+SyslogIdentifier=python code 
+
+[Install] 
+WantedBy=multi-user.target
